@@ -25,6 +25,7 @@ class Game:
         self.y_pos_bg = 380
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
+        self.high_score = 0
 
     def execute(self):
         self.running = True
@@ -38,7 +39,8 @@ class Game:
         # Game loop: events - update - draw
         self.playing = True
         self.game_speed = 20
-        self.score = 0
+        self.saved_score = self.score
+        self.score = 0 
         self.obstacle_manager.reset_obstacles()
         while self.playing:
             self.events()
@@ -59,8 +61,10 @@ class Game:
 
     def update_score(self):
         self.score += 1
+        if self.score > self.high_score:
+            self.high_score = self.score  # Atualizar o high score
         if self.score % 100 == 0:
-            self.game_speed += 5
+            self.game_speed += 1
 
     def draw(self):
         self.clock.tick(FPS)
@@ -99,7 +103,11 @@ class Game:
         else:  # Tela de restart
             self.screen.blit(GAMEROVER, (half_screen_width - 180, half_screen_height - 60))
             draw_message_component(
-                 f"Your Score: {self.score}",
+                f"High Score: {self.high_score}",
+                self.screen, pos_y_center=half_screen_height + 1
+            )
+            draw_message_component(
+                f"Your Score: {self.score}",
                 self.screen, pos_y_center=half_screen_height + 30
             )
             draw_message_component(
