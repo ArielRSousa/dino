@@ -80,5 +80,11 @@ BG = pygame.image.load(os.path.join(IMG_DIR, "Other/Track.png"))
 HEART = pygame.image.load(os.path.join(IMG_DIR, "Other/SmallHeart.png"))
 GAMEROVER = pygame.image.load(os.path.join(IMG_DIR, "Other/GameOver.png"))
 
+# Sounds
+pygame.mixer.init()
+JUMP_SOUND = pygame.mixer.Sound(os.path.join(IMG_DIR, "sound/jump.wav"))
+DIE_SOUND = pygame.mixer.Sound(os.path.join(IMG_DIR, "sound/die.wav"))
+POINT_SOUND = pygame.mixer.Sound(os.path.join(IMG_DIR, "sound/point.wav"))
+
 DEFAULT_TYPE = "default"
 SHIELD_TYPE = "shield"
