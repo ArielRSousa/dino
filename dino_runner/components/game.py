@@ -1,8 +1,10 @@
 import pygame
 from time import sleep
 from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS
+from dino_runner.utils.constants import GAMEROVER
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
+from dino_runner.utils.text_utils import draw_message_component
 
 FONT_STYLE = "freesansbold.ttf"
 TEXT_COLOR_BLACK = (0, 0, 0)
@@ -35,6 +37,8 @@ class Game:
     def run(self):
         # Game loop: events - update - draw
         self.playing = True
+        self.game_speed = 20
+        self.score = 0
         self.obstacle_manager.reset_obstacles()
         while self.playing:
             self.events()
@@ -78,11 +82,12 @@ class Game:
         self.x_pos_bg -= self.game_speed
 
     def draw_score(self):
-        font = pygame.font.Font(FONT_STYLE, 22)
-        text = font.render(f"Score: {self.score}", True, TEXT_COLOR_BLACK)
-        text_rect = text.get_rect()
-        text_rect.center = (1000, 50)
-        self.screen.blit(text, text_rect)
+        draw_message_component(
+            f"Score: {self.score}",
+            self.screen,
+            pos_x_center=1000,
+            pos_y_center=50,
+        )
 
     def show_menu(self):
         self.screen.fill((255, 255, 255))
@@ -90,28 +95,20 @@ class Game:
         half_screen_width = SCREEN_WIDTH // 2
 
         if self.death_count == 0:  # Tela de inicio
-            font = pygame.font.Font(FONT_STYLE, 22)
-            text = font.render("Press any key to start", True, TEXT_COLOR_BLACK)
-            text_rect = text.get_rect()
-            text_rect.center = (half_screen_width, half_screen_height)
-            self.screen.blit(text, text_rect)
+            draw_message_component("Press any key to start", self.screen,)
         else:  # Tela de restart
-            self.screen.blit(ICON, (half_screen_width - 20, half_screen_height - 140))
-            font = pygame.font.Font(FONT_STYLE, 22)
-            score_text = font.render(f"Your score: {self.score}", True, TEXT_COLOR_BLACK)
-            score_text_rect = score_text.get_rect()
-            score_text_rect.center = (half_screen_width, half_screen_height + 20)
-            self.screen.blit(score_text, score_text_rect)
-
-            death_count_text = font.render(f"Death count: {self.death_count}", True, TEXT_COLOR_BLACK)
-            death_count_text_rect = death_count_text.get_rect()
-            death_count_text_rect.center = (half_screen_width, half_screen_height + 50)
-            self.screen.blit(death_count_text, death_count_text_rect)
-
-            text = font.render("Press any key to restart", True, TEXT_COLOR_BLACK)
-            text_rect = text.get_rect()
-            text_rect.center = (half_screen_width, half_screen_height + 80)
-            self.screen.blit(text, text_rect)
+            self.screen.blit(GAMEROVER, (half_screen_width - 180, half_screen_height - 60))
+            draw_message_component(
+                 f"Your Score: {self.score}",
+                self.screen, pos_y_center=half_screen_height + 30
+            )
+            draw_message_component(
+                f"Death Count: {self.death_count}",
+                self.screen, pos_y_center=half_screen_height + 60
+            )
+            draw_message_component(
+                "Press any key to restart", self.screen, pos_y_center=half_screen_height + 90 
+            )
 
         pygame.display.update()
         self.handle_events_on_menu()
@@ -122,8 +119,4 @@ class Game:
                 self.playing = False
                 self.running = False
             elif event.type == pygame.KEYDOWN:
-                self.score = 0
-                self.game_speed = 20
-                self.death_count += 1
-                sleep(0.10)
                 self.run()
