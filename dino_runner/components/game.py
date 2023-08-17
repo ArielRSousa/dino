@@ -27,6 +27,7 @@ class Cloud():
 
     def draw(self, screen):
         screen.blit(self.image, (self.x, self.y))
+
 class Game:
     def __init__(self):
         pygame.init()
@@ -68,7 +69,6 @@ class Game:
             self.update()
             self.draw()
             
-
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -105,7 +105,6 @@ class Game:
         self.draw_power_up_time()
         for cloud in self.clouds:
             cloud.draw(self.screen)
-            
         pygame.display.update()
         pygame.display.flip()
 
@@ -155,7 +154,7 @@ class Game:
 
         if self.death_count == 0:  # Tela de inicio
             draw_message_component("Press any key to start", self.screen,)
-        else:  # Tela de restart
+        else:  
             self.screen.blit(GAMEROVER, (half_screen_width - 180, half_screen_height - 60))
             self.screen.blit(RESET_BUTTON, (half_screen_width -40 , half_screen_height + 80))
             draw_message_component(
