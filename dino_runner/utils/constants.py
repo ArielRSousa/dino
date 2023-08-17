@@ -70,7 +70,7 @@ BIRD = [
 ]
 
 # Doodads
-CLOUD = pygame.image.load(os.path.join(IMG_DIR, "Other/Cloud.png"))
+CLOUD = pygame.image.load(os.path.join(IMG_DIR, "Other/cloud.png"))
 
 # Power ups
 SHIELD = pygame.image.load(os.path.join(IMG_DIR, "Other/Shield.png"))
@@ -86,5 +86,8 @@ JUMP_SOUND = pygame.mixer.Sound(os.path.join(IMG_DIR, "sound/jump.wav"))
 DIE_SOUND = pygame.mixer.Sound(os.path.join(IMG_DIR, "sound/die.wav"))
 POINT_SOUND = pygame.mixer.Sound(os.path.join(IMG_DIR, "sound/point.wav"))
 
+RESET_BUTTON = pygame.image.load(os.path.join(IMG_DIR, "Other/Reset.png"))
+
 DEFAULT_TYPE = "default"
 SHIELD_TYPE = "shield"
+HAMMER_TYPE = "hammer"

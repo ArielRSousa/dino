@@ -1,34 +1,15 @@
 import pygame
 from pygame.sprite import Sprite
-from dino_runner.utils.constants import (
-    RUNNING,
-    JUMPING,
-    DUCKING,
-    RUNNING_SHIELD,
-    JUMPING_SHIELD,
-    DUCKING_SHIELD,
-    DEFAULT_TYPE,
-    SHIELD_TYPE,
-    JUMP_SOUND,
-)
+from dino_runner.utils.constants import (RUNNING, JUMPING, DUCKING, RUNNING_SHIELD, JUMPING_SHIELD, DUCKING_SHIELD, DEFAULT_TYPE, DUCKING_HAMMER, RUNNING_HAMMER, JUMPING_HAMMER, HAMMER_TYPE, SHIELD_TYPE, JUMP_SOUND)
 
 X_POS = 80
 Y_POS = 310
 Y_DUCK_POS = Y_POS + 30
 JUMP_VEL = 8.5
 
-DUCK_IMG = {
-    DEFAULT_TYPE: DUCKING,
-    SHIELD_TYPE: DUCKING_SHIELD,
-}
-JUMP_IMG = {
-    DEFAULT_TYPE: JUMPING,
-    SHIELD_TYPE: JUMPING_SHIELD,
-}
-RUN_IMG = {
-    DEFAULT_TYPE: RUNNING,
-    SHIELD_TYPE: RUNNING_SHIELD,
-}
+DUCK_IMG = {DEFAULT_TYPE: DUCKING, SHIELD_TYPE: DUCKING_SHIELD, HAMMER_TYPE: DUCKING_HAMMER,}
+JUMP_IMG = {DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD, HAMMER_TYPE: JUMPING_HAMMER,}
+RUN_IMG = {DEFAULT_TYPE: RUNNING, SHIELD_TYPE: RUNNING_SHIELD, HAMMER_TYPE: RUNNING_HAMMER,}
 
 jump_sound = pygame.mixer.Sound(JUMP_SOUND)
 
@@ -49,7 +30,7 @@ class Dinosaur(Sprite):
     def setup_state(self):
         self.has_power_up = False
         self.shield = False
-        self.shield_test = False 
+        self.shield_text = False 
         self.power_up_timer = 0
 
     def update(self, user_input):
