@@ -1,6 +1,7 @@
 import pygame
+from random import randint
 from time import sleep
-from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, RESET_BUTTON
+from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, RESET_BUTTON, CLOUD
 from dino_runner.components.power_ups.power_up_manager import PowerUpManager
 from dino_runner.utils.constants import GAMEROVER
 from dino_runner.components.dinosaur import Dinosaur
@@ -10,6 +11,22 @@ from dino_runner.utils.text_utils import draw_message_component
 FONT_STYLE = "freesansbold.ttf"
 TEXT_COLOR_BLACK = (0, 0, 0)
 
+class Cloud():
+    def __init__(self):
+        self.x = SCREEN_WIDTH + randint(800, 1000)
+        self.game_speed = 20 
+        self.y = randint(50, 100)
+        self.image = CLOUD
+        self.width = self.image.get_width() # Largura da imagem
+
+    def update(self):
+        self.x -= self.game_speed
+        if self.x < -self.width:
+            self.x = SCREEN_WIDTH + randint(800, 1000)
+            self.y = randint(50, 100)
+
+    def draw(self, screen):
+        screen.blit(self.image, (self.x, self.y))
 class Game:
     def __init__(self):
         pygame.init()
@@ -28,7 +45,7 @@ class Game:
         self.obstacle_manager = ObstacleManager()
         self.power_up_manager = PowerUpManager()
         self.high_score = 0
-
+        self.clouds = []
 
     def execute(self):
         self.running = True
@@ -62,6 +79,10 @@ class Game:
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
         self.obstacle_manager.update(self)
+        if randint(0, 1000) < 3:
+            self.clouds.append(Cloud())
+        for cloud in self.clouds:
+            cloud.update()
         self.power_up_manager.update(self)
         self.update_score()
 
@@ -82,6 +103,9 @@ class Game:
         self.draw_score()
         self.draw_high_score()
         self.draw_power_up_time()
+        for cloud in self.clouds:
+            cloud.draw(self.screen)
+            
         pygame.display.update()
         pygame.display.flip()
 

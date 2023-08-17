@@ -8,4 +8,4 @@ class Hammer(PowerUp): #Herencia da clase PowerUp
         self.type = HAMMER_TYPE
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = position
-        super().__init__(self.image, self.type) 
+        super().__init__(self.image, self.type)

@@ -40,7 +40,7 @@ class PowerUpManager:
                 self.power_ups.remove(power_up) 
 
     def draw(self, screen):
-        for power_up in self.power_ups:
+        for power_up in self.power_ups: 
             power_up.draw(screen)
 
     def reset_power_ups(self):
