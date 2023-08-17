@@ -3,7 +3,9 @@ from dino_runner.components.power_ups.power_up import PowerUp
 
 
 class Hammer(PowerUp): #Herencia da clase PowerUp
-    def __init__(self):
+    def __init__(self, position):
         self.image = HAMMER
         self.type = HAMMER_TYPE
-        super().__init__(self.image, self.type)
+        self.rect = self.image.get_rect()
+        self.rect.x, self.rect.y = position
+        super().__init__(self.image, self.type) 
